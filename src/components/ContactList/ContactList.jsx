@@ -1,23 +1,24 @@
 import {ImBin} from "react-icons/im"
 import { Item, List, Button } from "./ContactList.styled";
 import { useDispatch, useSelector } from "react-redux";
-import { getVisibleContacts } from "redux/selectors";
-import { removeContact } from "redux/contactsSlice";
-
+import { selectFilter, selectVisibleContacts } from "redux/selectors";
+import { deleteContacts } from "redux/operations";
 
 const ContactList = () => {
-    const saveContacts = useSelector(getVisibleContacts);
+    const filteredContacts = useSelector(selectVisibleContacts);
+    const savedFilter = useSelector(selectFilter)
     const dispatch = useDispatch();
 
     return(
     <List>
-        {saveContacts.map(contact => (
-      <Item key={contact.id}>
-        {contact.name + ' : ' + contact.number}
+        {filteredContacts.map(({ id, name, phone }) => (
+      <Item key={id}>
+                {name} : {phone}
             {<Button
                 type="button"
                 name="delete"
-                onClick={() => dispatch(removeContact(contact.id))}>
+                value={savedFilter}
+                onClick={() => dispatch(deleteContacts(id))}>
                 <ImBin fill="#000000" width="20" height="20"/>
                 delete
                 </Button>}

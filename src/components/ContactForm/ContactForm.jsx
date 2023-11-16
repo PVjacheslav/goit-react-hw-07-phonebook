@@ -1,10 +1,9 @@
-
 import { Formik } from 'formik';
 import {ImPlus} from "react-icons/im"
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { addContacts } from 'redux/operations';
 import * as Yup from 'yup';
 import { Button, ErrMsg, Label, StyledField, StyledForm } from './ContactForm.styled';
 import Notiflix from 'notiflix';
@@ -28,14 +27,16 @@ const ContactForm = () => {
         if (isInContacts) {
             Notiflix.Notify.failure(`${values.name} is already in contacts!`, {
                 position: 'left-top',
-                distance: '10px',
+                distance: '12px',
               });
             return;
             }
         dispatch(
-            addContact({ 
+            addContacts({ 
+                createdAt: new Date(),
+                name: values.name,
+                phone: values.number,
                 id: nanoid(),
-                ...values,
             })
         );
         resetForm();
