@@ -7,10 +7,9 @@ export const selectFilter = state => state.contactsBook.filter;
 
 export const selectVisibleContacts = createSelector(
   [selectContacts, selectFilter],
-  (savedFilter, items) => {
-    const normalizedFilter = savedFilter.toLowerCase();
-    return items.filter(({ name }) =>
-      name.toLowerCase().includes(normalizedFilter)
+  (contacts, filter) => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   }
 );

@@ -55,9 +55,9 @@ const ContactForm = () => {
                         <ErrMsg name="name" />
                 </Label>
 
-                <Label htmlFor='number'>
+                <Label htmlFor='phone'>
                     Number
-                        <StyledField type='tel' name="number" placeholder="459-12-56" required />
+                        <StyledField type='tel' name="phone" placeholder="459-12-56" required />
                         <ErrMsg name="number" />
                 </Label>
 

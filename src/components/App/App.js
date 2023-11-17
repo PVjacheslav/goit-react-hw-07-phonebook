@@ -2,19 +2,45 @@ import { Container, SubTitle, Title } from './App.styled';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
-import { useSelector } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
+import { Dna } from 'react-loader-spinner';
+
+const spinnerStyle = {
+  padding: '12px 64px',
+  position: 'absolute',
+};
 
 const App = () => {
-  const saveContacts = useSelector(selectContacts);
+  const contacts = useSelector(selectContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <Container>
       <Title>Phonebook</Title>
-      <ContactForm/>
+      <ContactForm />
       <SubTitle>Contacts</SubTitle>
       <Filter />
-      {saveContacts.length !== 0 && <ContactList />}
+      {isLoading && (
+        <Dna
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{ spinnerStyle }}
+          wrapperClass="dna-wrapper"
+        />
+      )}
+      {error && <b>{error}</b>}
+      {contacts.length !== 0 && <ContactList />}
     </Container>
   );
 };
