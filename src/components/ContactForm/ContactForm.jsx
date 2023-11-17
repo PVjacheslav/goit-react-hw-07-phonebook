@@ -1,6 +1,5 @@
 import { Formik } from 'formik';
 import {ImPlus} from "react-icons/im"
-import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
 import { addContacts } from 'redux/operations';
@@ -11,7 +10,7 @@ import Notiflix from 'notiflix';
 const initialValues = { name: '', number: '' };
 const schema = Yup.object().shape({
     name:   Yup.string().min(2, "Too short!").required("This field is required!"),
-    number: Yup.number().min(4, "Min 4 numbers").required("This field is required!"),
+    number: Yup.number(),
 })
 
 const ContactForm = () => {
@@ -33,10 +32,10 @@ const ContactForm = () => {
             }
         dispatch(
             addContacts({ 
-                createdAt: new Date(),
+                
                 name: values.name,
                 phone: values.number,
-                id: nanoid(),
+                
             })
         );
         resetForm();
