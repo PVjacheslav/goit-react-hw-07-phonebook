@@ -10,7 +10,7 @@ import Notiflix from 'notiflix';
 const initialValues = { name: '', number: '' };
 const schema = Yup.object().shape({
     name:   Yup.string().min(2, "Too short!").required("This field is required!"),
-    number: Yup.number(),
+    number: Yup.number().required("This field is required!"),
 })
 
 const ContactForm = () => {
@@ -54,9 +54,9 @@ const ContactForm = () => {
                         <ErrMsg name="name" />
                 </Label>
 
-                <Label htmlFor='phone'>
+                <Label htmlFor='number'>
                     Number
-                        <StyledField type='tel' name="phone" placeholder="459-12-56" required />
+                        <StyledField type='tel' name="number" placeholder="459-12-56" required />
                         <ErrMsg name="number" />
                 </Label>
 
